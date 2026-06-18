@@ -24,10 +24,14 @@ pipeline {
             }
         }
         stage('Push Image') {
-            steps {
-                bat 'docker push avishka6/nodeapp-test:%BUILD_NUMBER%'
+    steps {
+        script {
+            retry(3) {
+                bat "docker push avishka6/nodeapp-test:${env.BUILD_NUMBER}"
             }
         }
+    }
+}
     }
     post {
         always {
