@@ -9,6 +9,11 @@ pipeline {
                 }
             }
         }
+        stage('Cleanup') {
+    steps {
+        bat 'docker system prune -a -f'
+    }
+}
         stage('Build Docker Image') {
             steps {  
                 bat 'docker build -t avishka6/nodeapp-test:%BUILD_NUMBER% .'
