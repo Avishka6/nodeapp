@@ -5,27 +5,27 @@ pipeline {
         stage('SCM Checkout') {
             steps {
                 retry(3) {
-                    git branch: 'main', url: 'https://github.com/HGSChandeepa/test-node'
+                    git branch: 'main', url: 'https://github.com/Avishka6/nodeapp.git'
                 }
             }
         }
         stage('Build Docker Image') {
             steps {  
-                bat 'docker build -t adomicarts/nodeapp-cuban:%BUILD_NUMBER% .'
+                bat 'docker build -t avishka6/nodeapp-test:%BUILD_NUMBER% .'
             }
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'samin-docker', variable: 'samindocker')]) {
+                withCredentials([string(credentialsId: 'test-dockerpassword', variable: 'testdockerhubpass')]) {
                     script {
-                        bat "docker login -u adomicarts -p %samindocker%"
+                        bat "docker login -u avishka6 -p %testdockerhubpass%"
                     }
                 }
             }
         }
         stage('Push Image') {
             steps {
-                bat 'docker push adomicarts/nodeapp-cuban:%BUILD_NUMBER%'
+                bat 'docker push avishka6/nodeapp-test:%BUILD_NUMBER%'
             }
         }
     }
