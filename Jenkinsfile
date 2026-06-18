@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {  
-                bat 'docker build -t avishka6/nodeapp-test:${BUILD_NUMBER} .'
+                bat 'docker build -t avishka6/nodeapp-test:%BUILD_NUMBER% .'
             }
         }
         stage('Login to Docker Hub') {
@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-                bat 'docker push avishka6/nodeapp-test:${BUILD_NUMBER}'
+                bat 'docker push avishka6/nodeapp-test:%BUILD_NUMBER%'
             }
         }
     }
